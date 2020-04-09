@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
-import MapView from 'react-native-maps';
+import MapView, { Marker, Callout } from 'react-native-maps';
 import { StyleSheet,ActivityIndicator, Text, View, Dimensions ,Modal, Button,FlatList} from 'react-native';
 
 
+const COORDINATE1 = [35.67737855391474, 139.76531982421875];
+const COORDINATE2 = [35.67514743608467, 139.76806640625];
 
 const Choose = props => {
     return (
@@ -11,8 +13,14 @@ const Choose = props => {
         <Button title="show virus status" onPress={props.change}/>
       </View>
       <View style={styles.api}>
-      <MapView style={styles.mapStyle} />
-
+      <MapView style={styles.mapStyle}>
+          <Marker coordinate= {{latitude: 37.78825,
+                longitude: -122.4324}}>
+                  <Callout>
+                    <Text>daraadsadasdaddasdasdads</Text>
+                  </Callout>
+          </Marker>
+</MapView>
         </View>
       </Modal>
     );

@@ -45,6 +45,7 @@ export default class App extends React.Component {
         <FlatList
         style={styles.mapStyle}
           data={this.state.dataSource}
+          keyExtractor={(item, index) =>index.toString()}
           renderItem={({ item }) => (
             <Text>
             {item.Country}:     {"\n"}
@@ -52,7 +53,6 @@ export default class App extends React.Component {
             {'\t'}TotalDeaths : {item.TotalDeaths}
             </Text>
           )}
-          keyExtractor={(item) => {item.CountryCode}}
         />
       </View>
     );
