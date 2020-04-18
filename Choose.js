@@ -3,23 +3,53 @@ import MapView, { Marker, Callout } from 'react-native-maps';
 import { StyleSheet,ActivityIndicator, Text, View, Dimensions ,Modal, Button,FlatList} from 'react-native';
 
 
-const COORDINATE1 = [35.67737855391474, 139.76531982421875];
-const COORDINATE2 = [35.67514743608467, 139.76806640625];
+const customData = require('./country.json');
+
 
 const Choose = props => {
+  let position = customData.filter(i => i.country_code == "US");
+  let lati = position[0].latlng[0];
+  let longti=position[0].latlng[1];
+  let cnt = 0;
+  
     return (
       <Modal visible = {props.texton} animationType="slide">
         <View style={styles.module1}>
         <Button title="show virus status" onPress={props.change}/>
+    <Text>{position.length-1}{position[0].name}{lati} {longti}</Text>
       </View>
       <View style={styles.api}>
       <MapView style={styles.mapStyle}>
-          <Marker coordinate= {{latitude: 37.78825,
-                longitude: -122.4324}}>
+        {props.covid19apic.map(maker => {
+        position = customData.filter(i => i.name == maker.Country);
+        if (position.length != 0) {
+        lati = position[0].latlng[0];
+        longti=position[0].latlng[1];
+        return (
+        <Marker coordinate= {{latitude:lati,longitude:longti}}
+              title = {maker.Country}
+              >
                   <Callout>
-                    <Text>daraadsadasdaddasdasdads</Text>
+                    <Text>{'\t'}{maker.Country} {"\n"}
+                    {'\t'}TotalConfirmed : {maker.TotalConfirmed} {"\n"}
+                     {'\t'}TotalDeaths : {maker.TotalDeaths}
+                     </Text>
                   </Callout>
           </Marker>
+        )
+      } else {
+        return (<Marker coordinate= {{latitude:999,longitude:999}}
+        title = {maker.Country}
+        >
+            <Callout>
+              <Text>{'\t'}{maker.Country} {"\n"}
+               </Text>
+            </Callout>
+    </Marker>)
+      }
+    }
+    )
+    }
 </MapView>
         </View>
       </Modal>
